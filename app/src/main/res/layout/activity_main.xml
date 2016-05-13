@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:onClick="SuperpoweredExample_PlayPause"
+        android:onClick="Player_PlayPause"
         android:text="PLAY" />
 
     <SeekBar
@@ -41,7 +41,7 @@
             android:layout_below="@+id/playPauseA"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:onClick="Player1_OpenA"
+            android:onClick="Player_OpenA"
             android:text="open A" />
 
 
@@ -52,7 +52,7 @@
             android:layout_below="@+id/playPauseB"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:onClick="Player1_OpenB"
+            android:onClick="Player_OpenB"
             android:text="open B" />
 
     </LinearLayout>

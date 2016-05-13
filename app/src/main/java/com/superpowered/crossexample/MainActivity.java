@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     boolean playing = false;
+    MySuperpowered mySuperpowered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +61,16 @@ public class MainActivity extends AppCompatActivity {
             android.util.Log.d("", "Close error.");
         }
 
+        mySuperpowered = new MySuperpowered(getPackageResourcePath(), params);
         // Arguments: path to the APK file, offset and length of the two resource files, sample rate, audio buffer size.
-        SuperpoweredExample(getPackageResourcePath(), params);
+
 
         // crossfader events
         final SeekBar crossfader = (SeekBar)findViewById(R.id.crossFader);
         crossfader.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                onCrossfader(progress);
+                mySuperpowered.onCrossfader(progress);
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -80,15 +82,15 @@ public class MainActivity extends AppCompatActivity {
         fxfader.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                onFxValue(progress);
+                mySuperpowered.onFxValue(progress);
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
-                onFxValue(seekBar.getProgress());
+                mySuperpowered.onFxValue(seekBar.getProgress());
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                onFxOff();
+                mySuperpowered.onFxOff();
             }
         });
 
@@ -97,19 +99,13 @@ public class MainActivity extends AppCompatActivity {
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton checkedRadioButton = (RadioButton)radioGroup.findViewById(checkedId);
-                onFxSelect(radioGroup.indexOfChild(checkedRadioButton));
+                mySuperpowered.onFxSelect(radioGroup.indexOfChild(checkedRadioButton));
                 Toast.makeText(getApplicationContext(),"FX select : "
                         + Integer.toString(radioGroup.indexOfChild(checkedRadioButton)), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void SuperpoweredExample_PlayPause(View button) {  // Play/pause.
-        playing = !playing;
-        onPlayPause(playing);
-        Button b = (Button) findViewById(R.id.playPause);
-        b.setText(playing ? "Pause" : "Play");
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,27 +132,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        onBackground();
+        mySuperpowered.onBackground();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        onForeground();
+        mySuperpowered.onForeground();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        cleanup();
+        mySuperpowered.cleanup();
     }
 
-    public void Player1_OpenA(View button) {
+
+    public void Player_PlayPause(View button) {  // Play/pause.
+        playing = !playing;
+        mySuperpowered.onPlayPause(playing);
+        Button b = (Button) findViewById(R.id.playPause);
+        b.setText(playing ? "Pause" : "Play");
+    }
+
+    public void Player_OpenA(View button) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, 1);
     }
-    public void Player1_OpenB(View button) {
+    public void Player_OpenB(View button) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, 2);
@@ -180,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             path + "\n file imported exist", Toast.LENGTH_LONG)
                             .show();
-                    onOpen(path, requestCode);
+                    mySuperpowered.onOpen(path, requestCode);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             path + "\n file imported not exist",
@@ -204,27 +208,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private native void SuperpoweredExample(String apkPath, long[] offsetAndLength);
-    private native void onPlayPause(boolean play);
-    private native void onCrossfader(int value);
-    private native void onFxSelect(int value);
-    private native void onFxOff();
-    private native void onFxValue(int value);
-
-
-    private native void test(String appDir, AssetManager assetManager);
-    private native void onBackground();
-    private native void onForeground();
-    private native void cleanup();
-    private native void loadAsset(AssetManager assetManager);
-    private native void loadMp3Asset(AssetManager assetManager);
-    private native void resample();
-    private native void setApkPath(String apkPath);
-
-    public native void onOpen(String path, int value);
-    public native void onOpen2(String path, long[] param, int value);
-
-    static {
-        System.loadLibrary("SuperpoweredExample");
-    }
 }

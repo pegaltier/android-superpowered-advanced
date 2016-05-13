@@ -267,35 +267,35 @@ bool SuperpoweredExample::process(short int *output, unsigned int numberOfSample
 }
 
 extern "C" {
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray offsetAndLength);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray offsetAndLength);
 
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play);
 	
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxOff(JNIEnv *javaEnvironment, jobject self);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onFxOff(JNIEnv *javaEnvironment, jobject self);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value);
 	
 	
 	
-    JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_setApkPath(JNIEnv *javaEnvironment, jobject self, jstring javaApkPath);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_test(JNIEnv *javaEnvironment, jobject self, jstring cacheDir, jobject javaAssetManager);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onBackground(JNIEnv *javaEnvironment, jobject self);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onForeground(JNIEnv *javaEnvironment, jobject self);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_cleanup(JNIEnv *javaEnvironment, jobject self);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_loadAsset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_loadMp3Asset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_resample(JNIEnv *javaEnvironment, jobject self);
+    JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_setApkPath(JNIEnv *javaEnvironment, jobject self, jstring javaApkPath);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_test(JNIEnv *javaEnvironment, jobject self, jstring cacheDir, jobject javaAssetManager);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onBackground(JNIEnv *javaEnvironment, jobject self);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onForeground(JNIEnv *javaEnvironment, jobject self);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_cleanup(JNIEnv *javaEnvironment, jobject self);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_loadAsset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_loadMp3Asset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager);
+	JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_resample(JNIEnv *javaEnvironment, jobject self);
 
-    JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onOpen(JNIEnv *javaEnvironment, jobject self, jstring spath, jint value);
-    JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onOpen2(JNIEnv *javaEnvironment, jobject self, jstring spath, jlongArray params, jint value);
+    JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onOpen(JNIEnv *javaEnvironment, jobject self, jstring spath, jint value);
+    JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onOpen2(JNIEnv *javaEnvironment, jobject self, jstring spath, jlongArray params, jint value);
 
 }
 
 static SuperpoweredExample *example = NULL;
 
 // Android is not passing more than 2 custom parameters, so we had to pack file offsets and lengths into an array.
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray params) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray params) {
 	// Convert the input jlong array to a regular int array.
     jlong *longParams = javaEnvironment->GetLongArrayElements(params, JNI_FALSE);
     int arr[6];
@@ -311,32 +311,41 @@ JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_SuperpoweredExamp
 
 
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play) {
 	example->onPlayPause(play);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value) {
 	example->onCrossfader(value);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value) {
 	example->onFxSelect(value);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxOff(JNIEnv *javaEnvironment, jobject self) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onFxOff(JNIEnv *javaEnvironment, jobject self) {
 	example->onFxOff();
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value) {
 	example->onFxValue(value);
 }
+/*
+JNIEXPORT void Java_com_example_SuperpoweredExample_MySuperpowered_onOpen(JNIEnv *javaEnvironment, jobject self, jstring spath, jint value) {
+	example->onOpen(spath, value);
+}
+JNIEXPORT void Java_com_example_SuperpoweredExample_MySuperpowered_onOpen2(JNIEnv *javaEnvironment, jobject self, jstring spath, jlongArray params, jint value) {
+	example->onOpen2(spath, params, value);
+}
+ */
 
-JNIEXPORT void Java_com_example_SuperpoweredExample_SuperpoweredPlayer1_onOpen(JNIEnv *javaEnvironment, jobject self, jstring spath, jint value);
-JNIEXPORT void Java_com_example_SuperpoweredExample_SuperpoweredPlayer1_onOpen2(JNIEnv *javaEnvironment, jobject self, jstring spath, jlongArray params, jint value);
+JNIEXPORT void Java_com_example_SuperpoweredExample_MySuperpowered_onOpen(JNIEnv *javaEnvironment, jobject self, jstring spath, jint value);
+JNIEXPORT void Java_com_example_SuperpoweredExample_MySuperpowered_onOpen2(JNIEnv *javaEnvironment, jobject self, jstring spath, jlongArray params, jint value);
+
 /*
 CUSTOMIZED
 */
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_setApkPath(JNIEnv *javaEnvironment, jobject self, jstring javaApkPath) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_setApkPath(JNIEnv *javaEnvironment, jobject self, jstring javaApkPath) {
      const char *path = javaEnvironment->GetStringUTFChars(javaApkPath, JNI_FALSE);
 
      apkPath = strdup(path);
@@ -346,7 +355,7 @@ JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_setApkPath(JNIEnv
 }
 
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_test(JNIEnv *javaEnvironment, jobject self, jstring cacheDir, jobject javaAssetManager) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_test(JNIEnv *javaEnvironment, jobject self, jstring cacheDir, jobject javaAssetManager) {
     __android_log_print(ANDROID_LOG_ERROR, "SuperpoweredExample", "test");
 
     const char *cache_dir = javaEnvironment->GetStringUTFChars(cacheDir, JNI_FALSE);
@@ -396,7 +405,7 @@ JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_test(JNIEnv *java
 
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_loadAsset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_loadAsset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager) {
     AAssetManager *mgr = AAssetManager_fromJava(javaEnvironment, javaAssetManager);
     AAsset* asset = AAssetManager_open(mgr, "60.wav", AASSET_MODE_STREAMING);
     {
@@ -419,7 +428,7 @@ JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_loadAsset(JNIEnv 
     AAsset_close(asset);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_loadMp3Asset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_loadMp3Asset(JNIEnv *javaEnvironment, jobject self, jobject javaAssetManager) {
     AAssetManager *mgr = AAssetManager_fromJava(javaEnvironment, javaAssetManager);
     AAsset* asset = AAssetManager_open(mgr, "60.aac", AASSET_MODE_STREAMING);
     off_t start_index, file_size;
@@ -454,7 +463,7 @@ JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_loadMp3Asset(JNIE
     delete decoder;
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_resample(JNIEnv *javaEnvironment, jobject self) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_resample(JNIEnv *javaEnvironment, jobject self) {
     SuperpoweredResampler *resampler = new SuperpoweredResampler();
     resampler->reset();
     resampler->rate = 44100. / 48000.;
@@ -481,27 +490,27 @@ JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_resample(JNIEnv *
     delete resampler;
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onBackground(JNIEnv *javaEnvironment, jobject self) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onBackground(JNIEnv *javaEnvironment, jobject self) {
     example->onBackground();
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onForeground(JNIEnv *javaEnvironment, jobject self) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onForeground(JNIEnv *javaEnvironment, jobject self) {
     example->onForeground();
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_cleanup(JNIEnv *javaEnvironment, jobject self) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_cleanup(JNIEnv *javaEnvironment, jobject self) {
     delete example;
     free(sound);
 }
 
 
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onOpen(JNIEnv *javaEnvironment, jobject self, jstring spath, jint value) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onOpen(JNIEnv *javaEnvironment, jobject self, jstring spath, jint value) {
     const char *path = javaEnvironment->GetStringUTFChars(spath, JNI_FALSE);
     example->onOpen(path,value);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onOpen2(JNIEnv *javaEnvironment, jobject self, jstring spath, jlongArray params, jint value) {
+JNIEXPORT void Java_com_superpowered_crossexample_MySuperpowered_onOpen2(JNIEnv *javaEnvironment, jobject self, jstring spath, jlongArray params, jint value) {
     // Convert the input jlong array to a regular int array.
     jlong *longParams = javaEnvironment->GetLongArrayElements(params, JNI_FALSE);
     int arr[2];
